@@ -1,0 +1,32 @@
+//ALARKSDS JOB  '              ',
+//             MSGCLASS=X,MSGLEVEL=(1,1),NOTIFY=&SYSUID
+//*            TYPRUN=SCAN,
+//*
+//*   DEFINE CLUSTER (ARCHIVO) KSDS
+//*
+//*
+//P0003    EXEC PGM=IDCAMS
+//SYSOUT   DD SYSOUT=*
+//SYSPRINT DD SYSOUT=*
+//INFI     DD DSN=ALARCON.CLIE.KSDS,DISP=SHR
+//SYSIN    DD *
+  DELETE CLIENTE.REDUC2.KSDS       CL PURGE
+  SET MAXCC = 0
+  DEFINE CLUSTER (NAME(CLIENTE.REDUC2.KSDS)     -
+                  RECSZ(200 200)                -
+                  FREESPACE(5 1)                -
+                  INDEXED                       -
+                  KEY(10 0)                     -
+                  NOERASE                       -
+                  NOREUSE                       -
+                  SHR(2 3)                      -
+                  VOLUMES(BASES1)               -
+                  RECORDS(50 5))                -
+            DATA  (NAME(CLIENTE.REDUC2.KSDS.D)) -
+            INDEX (NAME(CLIENTE.REDUC2.KSDS.I))
+  LISTCAT ENTRY(CLIENTE.REDUC2.KSDS)  ALL
+  REPRO INFILE(INFI) OUTDATASET(CLIENTE.REDUC2.KSDS) -
+    SKIP(2755) COUNT(100)
+/*
+//
+

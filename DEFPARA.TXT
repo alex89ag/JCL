@@ -1,0 +1,39 @@
+//DEFPARA  JOB  '              ',                                       JOB08655
+//             MSGCLASS=X,MSGLEVEL=(1,1),NOTIFY=&SYSUID
+//*            TYPRUN=SCAN,
+//P0003    EXEC PGM=IDCAMS
+//SYSOUT   DD SYSOUT=*
+//SYSPRINT DD SYSOUT=*
+//SYSIN    DD *
+  DELETE CLIE.PARAMET           CL PURGE
+  DEFINE CLUSTER (NAME(CLIE.PARAMET) -
+                  RECSZ(80 80)                -
+                  FREESPACE(5 2)            -
+                  INDEXED                       -
+                  KEY(9 0)                     -
+                  NOERASE                       -
+                  NOREUSE                        -
+                  SHR(2  3)                      -
+                  VOLUMES(BASES1)                -
+                  RECORDS(10 5))                 -
+            DATA  (NAME(CLIE.PARAMET.D)) -
+            INDEX (NAME(CLIE.PARAMET.I))
+/*
+//P004  EXEC PGM=SORT
+//SORTIN  DD  *
+10000000000000000
+/*
+/* 01 PARAM-REG.
+/* 05  PARAM-CLAVE
+/*        10   PARAM-CLAVE-TIP  PIC X.
+/*        10   PARAM-NRO-CLAVE PIC 9(8).
+/*   05  PARAM-ULT-NUN   PIC X(8).
+/*   05  FILLER  X(63).
+/*
+/*
+//SORTOUT DD  DSN=CLIE.PARAMET,DISP=SHR
+//SYSIN   DD  *
+ SORT FIELDS=COPY
+/*
+//SYSOUT   DD SYSOUT=*
+

@@ -1,0 +1,36 @@
+//NFALKSDS JOB  '              ',
+//             MSGCLASS=X,MSGLEVEL=(1,1),NOTIFY=&SYSUID
+//*            TYPRUN=SCAN,
+//*
+//*   DEFINE CLUSTER (ARCHIVO) KSDS
+//*   CLAVE COMIENZA EN COL 1 (DESPLAZAMIENTO 0)
+//*
+//P0003    EXEC PGM=IDCAMS
+//SYSOUT   DD SYSOUT=*
+//SYSPRINT DD SYSOUT=*
+//SYSIN    DD *
+  DELETE CAPA.LOCAL                 CL PURGE
+  SET LASTCC = 0
+  SET MAXCC = 0
+  DEFINE CLUSTER (NAME(CAPA.LOCAL) -
+                RECSZ(80 80)                  -
+                FREESPACE(1 1)                -
+                INDEXED                       -
+                KEY(4 0)                      -
+                NOERASE                       -
+                NOREUSE                       -
+                SHR(2 3)                      -
+                VOLUMES(BASES1)               -
+                RECORDS(1000 20))             -
+           DATA  (NAME(CAPA.LOCAL.D))         -
+           INDEX (NAME(CAPA.LOCAL.I))
+  LISTCAT ENTRY(CAPA.LOCAL) ALL
+/*
+//SORT     EXEC PGM=SORT
+//SORTIN   DD DSN=CAPA.LOCALID,DISP=SHR
+//SORTOUT  DD DSN=CAPA.LOCAL,DISP=SHR
+//SYSOUT   DD SYSOUT=*
+//SYSIN    DD *
+ SORT FIELDS=COPY
+/*
+

@@ -1,0 +1,33 @@
+//ALAKSDS  JOB  'DEFINIR KSDS',
+//             MSGCLASS=X,MSGLEVEL=(1,1),NOTIFY=&SYSUID
+//*            TYPRUN=SCAN,
+//*
+//*   DEFINE CLUSTER (ARCHIVO) KSDS
+//*   CLAVE COMIENZA EN COL 1 (DESPLAZAMIENTO 0)
+//*
+//*
+//P0003    EXEC PGM=IDCAMS
+//SYSOUT   DD SYSOUT=*
+//SYSPRINT DD SYSOUT=*
+//SYSIN    DD *
+  DELETE ALARCON.CLIE.KSDS    CL PURGE
+  DEFINE CLUSTER (NAME(ALARCON.CLIE.KSDS)       -
+                  RECSZ(200 200)                -
+                  FREESPACE(5 1 )               -
+                  INDEXED                       -
+                  KEY(10 0) NOREUSE NOERASE     -
+                  SHR(2 3)                      -
+                  VOLUMES(BASES1)               -
+                  RECORDS(10000 20))            -
+            DATA  (NAME(ALARCON.CLIE.KSDS.DAT)) -
+            INDEX (NAME(ALARCON.CLIE.KSDS.IND))
+  LISTCAT ENTRY(ALARCON.CLIE.KSDS) ALL
+/*
+//SORT     EXEC PGM=SORT
+//SORTIN   DD DSN=CAPA.CLIENTE.NUEVO,DISP=SHR
+//SORTOUT  DD DSN=ALARCON.CLIE.KSDS,DISP=SHR
+//SYSOUT   DD SYSOUT=*
+//SYSIN    DD *
+ SORT FIELDS=(1,10,BI,A)
+/*
+

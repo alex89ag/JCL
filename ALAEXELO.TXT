@@ -1,0 +1,27 @@
+//ALAREXEC JOB 102,'EXEJEC',NOTIFY=&SYSUID,                             00010012
+//       MSGCLASS=Q,CLASS=A,MSGLEVEL=(1,1),REGION=0M,                   00020012
+//       RESTART=*                                                      00030012
+//DELETE   EXEC PGM=IDCAMS                                              00040012
+//SYSOUT   DD  SYSOUT=*                                                 00050012
+//AMSDMP   DD  SYSOUT=*                                                 00060012
+//SYSPRINT DD  SYSOUT=*                                                 00070012
+//SYSIN    DD   *                                                       00080012
+  DELETE CAPA.ALARCON.APELLIDO                                          00090012
+  SET MAXCC = 0                                                         00100012
+/*                                                                      00110012
+//SORT1  EXEC PGM=SORT                                                  00120012
+//SYSOUT  DD  SYSOUT=*                                                  00130012
+//SORTIN  DD  DSN=CAPA.ARCHIVO.PRUEBA,DISP=SHR                          00140012
+//SORTOUT DD  DSN=CAPA.ALARCON.APELLIDO,DISP=(NEW,CATLG,DELETE),        00150012
+//    VOL=SER=DISCO5,SPACE=(TRK,(20,5)),                                00160012
+//    DCB=(DSORG=PS,LRECL=200,BLKSIZE=20000,RECFM=FB)                   00170012
+//SYSIN  DD  *                                                          00180012
+ SORT FIELDS=(64,20,A),FORMAT=CH                                        00190012
+/*                                                                      00200012
+//PASO1   EXEC  PGM=ALARLOCA                                            00210012
+//STEPLIB DD  DSN=GARCIA.LINKLIB,DISP=SHR                               00220012
+//INPCLI  DD  DSN=CAPA.ALARCON.APELLIDO,DISP=(SHR,DELETE,DELETE)        00230012
+//PRINT   DD  SYSOUT=*                                                  00240012
+//SYSOUT  DD  SYSOUT=*                                                  00250012
+//                                                                      00260012
+

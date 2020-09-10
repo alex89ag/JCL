@@ -1,0 +1,34 @@
+//ALARESDS  JOB  '              ',
+//             MSGCLASS=X,MSGLEVEL=(1,1),NOTIFY=&SYSUID
+//*            TYPRUN=SCAN,
+//*
+//P0003    EXEC PGM=IDCAMS
+//SYSOUT   DD SYSOUT=*
+//SYSPRINT DD SYSOUT=*
+//SYSIN    DD *
+  DELETE MOVI.CLIENTES.ESDS      CL PURGE
+  DEFINE CLUSTER (NAME(MOVI.CLIENTES.ESDS) -
+             RECSZ(200 200)                -
+             NONINDEXED                    -
+             NOERASE REUSE                 -
+             SHR(2 3)                      -
+             VOLUMES(BASES1)               -
+             RECORDS(50 10))
+/*
+//REPRO    EXEC PGM=IDCAMS
+//SYSOUT   DD SYSOUT=*
+//SYSPRINT DD SYSOUT=*
+//AMSDMP   DD SYSOUT=*
+//INFI     DD DSN=MOVI.CLIENTES.INPUT,DISP=SHR
+//OFI      DD DSN=MOVI.CLIENTES.ESDS,DISP=SHR
+//SYSIN    DD *
+  REPRO INFILE(INFI) OUTFILE(OFI)
+/*
+//LISTCO   EXEC PGM=IDCAMS
+//SYSOUT   DD SYSOUT=*
+//SYSPRINT DD SYSOUT=*
+//AMSDMP   DD SYSOUT=* CHAR HEX DUMP SKIP(99) COUNT(88)
+//SYSIN    DD *
+  PRINT IDS(MOVI.CLIENTES.ESDS)
+/*
+

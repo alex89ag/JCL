@@ -1,0 +1,32 @@
+//MCDEFPAR JOB  '              ',
+//             MSGCLASS=X,MSGLEVEL=(1,1),NOTIFY=&SYSUID
+//*            TYPRUN=SCAN,
+//P0003    EXEC PGM=IDCAMS
+//SYSOUT   DD SYSOUT=*
+//SYSPRINT DD SYSOUT=*
+//SYSIN    DD *
+  DELETE ALARCON.PARAMET           CL PURGE
+  DEFINE CLUSTER (NAME(ALARCON.PARAMET) -
+                  RECSZ(100 100)                -
+                  FREESPACE(5 2)            -
+                  INDEXED                       -
+                  KEY(20 0)                     -
+                  NOERASE                       -
+                  NOREUSE                        -
+                  SHR(2  3)                      -
+                  VOLUMES(BASES1)                -
+                  CYL(5 2))                 -
+            DATA  (NAME(ALARCON.PARAMET.D)) -
+            INDEX (NAME(ALARCON.PARAMET.I))
+/*
+//P004  EXEC PGM=SORT
+//SORTIN  DD  *
+01                  00025545
+/*
+//SORTOUT DD  DSN=ALARCON.PARAMET,DISP=SHR
+//SYSIN   DD  *
+ SORT FIELDS=COPY
+/*
+//SYSOUT   DD SYSOUT=*
+//
+
